@@ -1,0 +1,151 @@
+
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Roseau Hotel & Spa | Luxury & Fine Dining</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav>
+    <div class="nav-container">
+        <a class="logo" data-section="home">Roseau Hotel & Spa</a>
+        <ul class="nav-links">
+            <li><a data-section="home">Home</a></li>
+            <li><a data-section="menu">Menu</a></li>
+            <li><a data-section="gallery">Gallery</a></li>
+            <li><a data-section="about-footer">About</a></li>
+            <li><a data-section="contact">Contact</a></li>
+        </ul>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="am">አማ</button>
+        </div>
+        <div class="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- HOME SECTION -->
+<section id="home" class="hero" style="scroll-margin-top: 70px;">
+    <div class="hero-content">
+        <h1 id="homeTitle">Experience Elegance & Comfort</h1>
+        <p id="homeSubtitle">Luxurious rooms, gourmet dining, and unmatched hospitality in the heart of Ethiopia</p>
+        <div class="cta-buttons">
+            <button class="btn btn-primary" data-section="menu" id="exploreMenuBtn"><i class="fas fa-utensils"></i> Explore Menu</button>
+            <button class="btn btn-secondary" data-section="contact" id="contactUsBtn"><i class="fas fa-calendar-check"></i> Contact Us</button>
+        </div>
+    </div>
+</section>
+
+<!-- DIGITAL MENU SECTION - GRID LAYOUT -->
+<section id="menu" class="section menu-section">
+    <div class="menu-app">
+        <h2 class="section-title" id="menuTitle">Our Digital Menu</h2>
+        <div class="control-bar">
+            <select id="langSelect">
+                <option value="en">English</option>
+                <option value="am">አማርኛ</option>
+            </select>
+            <input type="text" id="searchInput" placeholder="Search dishes..." class="search-box">
+            <div class="fast-toggle">
+                <input type="checkbox" id="fastToggle">
+                <label for="fastToggle" id="fastLabel">🍃 Fasting menu only</label>
+            </div>
+        </div>
+
+        <div id="homeMenu" class="page active">
+            <div class="category-grid" id="categoryGrid"></div>
+        </div>
+
+        <div id="categoryPageMenu" class="page">
+            <div class="smart-back-wrapper">
+                <button id="backBtn" class="back-btn"><i class="fas fa-arrow-left"></i> <span id="backText">Back to Categories</span></button>
+                <div class="category-badge" id="categoryBadge">
+                    <i class="fas fa-tag"></i> <span id="currentCategoryDisplay">Select Category</span>
+                </div>
+            </div>
+            <div class="menu-grid" id="menuGrid"></div>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY SECTION -->
+<section id="gallery" class="section section-medium">
+    <div class="container">
+        <h2 class="section-title" id="galleryTitle">Moments at Roseau</h2>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+</section>
+
+<!-- ABOUT SECTION - Above Footer -->
+<section id="about-footer" class="section section-light-bg">
+    <div class="container">
+        <h2 class="section-title" id="aboutTitle">About Roseau</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p id="aboutText1">Nestled in a serene landscape, Roseau Hotel & Spa combines timeless elegance with modern comforts. Enjoy beautifully appointed rooms, exceptional service, and a peaceful environment that feels like home away from home. Our fine dining experience brings authentic Ethiopian flavors and international cuisine to your table.</p>
+                <p id="aboutText2">Founded in 2010, Roseau has become a landmark of hospitality. We take pride in offering world-class spa treatments, breathtaking views, and personalized service to every guest.</p>
+                <p id="aboutText3"><i class="fas fa-star" style="color: var(--primary-gold);"></i> Award-winning service | <i class="fas fa-star" style="color: var(--primary-gold);"></i> Eco-friendly | <i class="fas fa-star" style="color: var(--primary-gold);"></i> Cultural heritage</p>
+            </div>
+            <div class="features">
+                <div class="feature-card"><i class="fas fa-wifi"></i><h4 id="feature1Title">Free Wi-Fi</h4><p id="feature1Desc">High-speed internet</p></div>
+                <div class="feature-card"><i class="fas fa-utensils"></i><h4 id="feature2Title">Breakfast Included</h4><p id="feature2Desc">Fresh daily buffet</p></div>
+                <div class="feature-card"><i class="fas fa-spa"></i><h4 id="feature3Title">Spa & Wellness</h4><p id="feature3Desc">Relaxation awaits</p></div>
+                <div class="feature-card"><i class="fas fa-concierge-bell"></i><h4 id="feature4Title">24/7 Service</h4><p id="feature4Desc">Room service & support</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER SECTION - MOBILE FRIENDLY -->
+<footer id="contact" class="footer-roseau" style="scroll-margin-top: 70px;">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3 id="quickLinksTitle">Quick Links</h3>
+            <ul>
+                <li><a data-section="about-footer" id="footerAboutLink">About Us</a></li>
+                <li><a data-section="gallery" id="footerGalleryLink">Our Gallery</a></li>
+                <li><a data-section="menu" id="footerMenuLink">Our Menu</a></li>
+                <li><a data-section="home" id="footerHomeLink">Home</a></li>
+            </ul>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+        <div class="footer-section contact-info">
+            <h3 id="contactTitle">Contact Info</h3>
+            <p><i class="fas fa-map-marker-alt"></i> <span id="address">Gondar, Ethiopia</span></p>
+            <p><i class="fas fa-phone-alt"></i> <a href="tel:+251977782907">+251977782907</a></p>
+            <p><i class="fas fa-envelope"></i> <a href="mailto:support@ethionova.com">support@ethionova.com</a></p>
+        </div>
+        <div class="footer-section">
+            <h3 id="hoursTitle">Opening Hours</h3>
+            <div class="hours-info">
+                <p id="hoursText"><strong>Sunday - Sunday</strong> · 24 / 7</p>
+                <div class="badge-24"><i class="fas fa-clock"></i> <span id="alwaysOpen">Always Open</span></div>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3 id="paymentTitle">Payment Methods</h3>
+            <p id="payment1">📱 Telebirr | CBE Birr</p>
+            <p id="payment2">🏦 Bank of Abyssinia | Awash Bank</p>
+            <p id="payment3">💳 Visa | Mastercard</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p id="copyright">© 2025 Roseau Hotel & Spa | Powered by Ethionova | All rights reserved.</p>
+        <a href="#" style="color:#d4af37; text-decoration: none;"><i class="fas fa-crown"></i> <span id="adminDashboard">Admin Dashboard</span></a>
+    </div>
+</footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>
