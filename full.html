@@ -1,0 +1,1205 @@
+Here is the complete HTML document with an improved "Back" button that appears smartly when a food category is clicked, and a fully functional two-column grid on mobile devices.
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Roseau Hotel & Spa | Luxury & Fine Dining</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gold: #D4AF37;
+            --primary-dark: #0f1a18;
+            --secondary-dark: #1b2a27;
+            --text-light: #f4f1ea;
+            --text-muted: #c9c1a8;
+            --shadow: 0 20px 40px rgba(0,0,0,0.1);
+            --shadow-hover: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-light);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .logo, .category-card span, .card-content h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* ================= NAVIGATION ================= */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 26, 24, 0.95);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        nav.scrolled {
+            padding: 0.7rem 0;
+            background: rgba(15, 26, 24, 0.98);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            text-decoration: none;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-gold);
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(212, 175, 55, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            border: 1px solid var(--primary-gold);
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .lang-btn.active {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+        }
+        .lang-btn:hover:not(.active) {
+            background: rgba(212, 175, 55, 0.3);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            transition: 0.3s;
+        }
+
+        /* ================= SECTION STYLES ================= */
+        .section {
+            scroll-margin-top: 85px;
+            padding: 5rem 2rem;
+        }
+
+        .section-dark {
+            background: var(--primary-dark);
+        }
+
+        .section-medium {
+            background: var(--secondary-dark);
+        }
+
+        .section-light-bg {
+            background: linear-gradient(135deg, #1a2a26 0%, #0f1a18 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-gold);
+            font-family: 'Playfair Display', serif;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--primary-gold);
+            margin: 1rem auto 0;
+            border-radius: 3px;
+        }
+
+        /* ================= HERO SECTION ================= */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            color: #f0e6d0;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        /* ================= DIGITAL MENU SECTION - GRID LAYOUT ================= */
+        .menu-section {
+            background: var(--primary-dark);
+        }
+        .menu-app {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .control-bar {
+            background: var(--secondary-dark);
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            border-radius: 60px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        select, .search-box {
+            background: #2c3a36;
+            border: 1px solid var(--primary-gold);
+            color: var(--text-light);
+            padding: 0.6rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: pointer;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 180px;
+        }
+        .search-box::placeholder {
+            color: var(--text-muted);
+        }
+        .fast-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #2c3a36;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            border: 1px solid var(--primary-gold);
+        }
+        .page {
+            display: none;
+            animation: fade 0.3s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Category Grid */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+        .category-card {
+            background: var(--secondary-dark);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 28px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            text-align: center;
+        }
+        .category-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-gold);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        .category-card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .category-card:hover img {
+            transform: scale(1.05);
+        }
+        .category-card span {
+            display: block;
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-gold);
+        }
+        
+        /* Menu Items Grid - TWO COLUMN ON MOBILE (CRITICAL FIX) */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        /* Tablet: 2 columns */
+        @media (max-width: 992px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+        
+        /* Mobile: FORCE 2 COLUMNS - EXACT REQUIREMENT */
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1rem;
+            }
+            .menu-card {
+                width: 100%;
+                min-width: 0;
+            }
+            .menu-card img {
+                height: 150px;
+            }
+            .card-content {
+                padding: 0.9rem;
+            }
+            .card-content h3 {
+                font-size: 1rem;
+            }
+            .card-content p {
+                font-size: 0.75rem;
+            }
+            .price {
+                font-size: 0.8rem;
+                padding: 0.2rem 0.8rem;
+            }
+        }
+        
+        /* Very small phones: still 2 columns */
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.8rem;
+            }
+            .menu-card img {
+                height: 130px;
+            }
+            .card-content {
+                padding: 0.7rem;
+            }
+            .card-content h3 {
+                font-size: 0.9rem;
+            }
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .menu-card {
+            background: var(--secondary-dark);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.35s ease;
+            cursor: pointer;
+        }
+        .menu-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary-gold);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+        }
+        .menu-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .menu-card:hover img {
+            transform: scale(1.03);
+        }
+        .card-content {
+            padding: 1.2rem;
+        }
+        .card-content h3 {
+            font-size: 1.25rem;
+            color: var(--primary-gold);
+            margin-bottom: 0.5rem;
+        }
+        .card-content p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0.5rem 0;
+            line-height: 1.4;
+        }
+        .price {
+            font-weight: 700;
+            display: inline-block;
+            background: #2c423d;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        /* SMART BACK BUTTON - IMPROVED DESIGN */
+        .smart-back-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .back-btn {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, #b88d2a 100%);
+            color: var(--primary-dark);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            display: none;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            width: fit-content;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            gap: 10px;
+            align-items: center;
+        }
+        .back-btn i {
+            transition: transform 0.2s ease;
+        }
+        .back-btn:hover {
+            transform: translateX(-5px);
+            background: linear-gradient(135deg, #c5a82e 0%, #9e761f 100%);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+        .back-btn:hover i {
+            transform: translateX(-3px);
+        }
+        .category-badge {
+            background: rgba(212, 175, 55, 0.2);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: var(--primary-gold);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+        }
+        .category-badge i {
+            margin-right: 6px;
+        }
+
+        /* ================= GALLERY SECTION ================= */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        .gallery-card {
+            background: var(--secondary-dark);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .gallery-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary-gold);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        .gallery-img {
+            height: 280px;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+        }
+        .gallery-card:hover .gallery-img {
+            transform: scale(1.05);
+        }
+        .gallery-card .caption {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 500;
+            color: var(--primary-gold);
+        }
+
+        /* ================= ABOUT SECTION ================= */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--primary-gold);
+            margin-bottom: 0.8rem;
+        }
+        .feature-card h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .feature-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ================= FOOTER - MOBILE FRIENDLY ================= */
+        .footer-roseau {
+            background: #0c1816;
+            border-top: 1px solid rgba(180, 155, 94, 0.3);
+            padding: 3rem 2rem 1.5rem;
+            color: #e8dec9;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+        .footer-section {
+            text-align: left;
+        }
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #d4af37;
+            margin-bottom: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #d4af37;
+            border-radius: 2px;
+        }
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-section ul li {
+            margin-bottom: 0.7rem;
+        }
+        .footer-section ul li a {
+            color: #e0d6c2;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .footer-section ul li a:hover {
+            color: #d4af37;
+            transform: translateX(5px);
+        }
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.9rem;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+        .contact-info p i {
+            width: 24px;
+            color: #d4af37;
+        }
+        .contact-info a {
+            color: #e0d6c2;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .hours-info {
+            background: rgba(27, 42, 39, 0.5);
+            padding: 0.8rem 1rem;
+            border-radius: 16px;
+            border-left: 3px solid #d4af37;
+        }
+        .badge-24 {
+            background: #d4af37;
+            color: #0f1a18;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        .social-links {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .social-links a {
+            background: #1b2a27;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            transition: all 0.2s;
+            border: 1px solid #b89b5e40;
+            text-decoration: none;
+        }
+        .social-links a:hover {
+            background: #d4af37;
+            color: #0f1a18;
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(180, 155, 94, 0.25);
+            font-size: 0.8rem;
+            color: #b89b5e;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+        }
+
+        @media (max-width: 768px) {
+            .section { padding: 3rem 1.5rem; }
+            .hamburger { display: flex; }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: var(--primary-dark);
+                flex-direction: column;
+                padding: 2rem;
+                transition: 0.3s;
+                gap: 1.5rem;
+                text-align: center;
+                z-index: 999;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            }
+            .nav-links.active { left: 0; }
+            .lang-switcher { order: 3; margin-left: auto; }
+            .control-bar { flex-direction: column; align-items: stretch; }
+            .category-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .footer-container { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+            .footer-section { text-align: center; }
+            .footer-section h3::after { left: 50%; transform: translateX(-50%); }
+            .contact-info p { justify-content: center; }
+            .social-links { justify-content: center; }
+            .section-title { font-size: 2rem; }
+            .hero { background-attachment: scroll; }
+            .features { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .smart-back-wrapper {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-container">
+        <a class="logo" data-section="home">Roseau Hotel & Spa</a>
+        <ul class="nav-links">
+            <li><a data-section="home">Home</a></li>
+            <li><a data-section="menu">Menu</a></li>
+            <li><a data-section="gallery">Gallery</a></li>
+            <li><a data-section="about-footer">About</a></li>
+            <li><a data-section="contact">Contact</a></li>
+        </ul>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="am">አማ</button>
+        </div>
+        <div class="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- HOME SECTION -->
+<section id="home" class="hero" style="scroll-margin-top: 70px;">
+    <div class="hero-content">
+        <h1 id="homeTitle">Experience Elegance & Comfort</h1>
+        <p id="homeSubtitle">Luxurious rooms, gourmet dining, and unmatched hospitality in the heart of Ethiopia</p>
+        <div class="cta-buttons">
+            <button class="btn btn-primary" data-section="menu" id="exploreMenuBtn"><i class="fas fa-utensils"></i> Explore Menu</button>
+            <button class="btn btn-secondary" data-section="contact" id="contactUsBtn"><i class="fas fa-calendar-check"></i> Contact Us</button>
+        </div>
+    </div>
+</section>
+
+<!-- DIGITAL MENU SECTION - GRID LAYOUT -->
+<section id="menu" class="section menu-section">
+    <div class="menu-app">
+        <h2 class="section-title" id="menuTitle">Our Digital Menu</h2>
+        <div class="control-bar">
+            <select id="langSelect">
+                <option value="en">English</option>
+                <option value="am">አማርኛ</option>
+            </select>
+            <input type="text" id="searchInput" placeholder="Search dishes..." class="search-box">
+            <div class="fast-toggle">
+                <input type="checkbox" id="fastToggle">
+                <label for="fastToggle" id="fastLabel">🍃 Fasting menu only</label>
+            </div>
+        </div>
+
+        <div id="homeMenu" class="page active">
+            <div class="category-grid" id="categoryGrid"></div>
+        </div>
+
+        <div id="categoryPageMenu" class="page">
+            <div class="smart-back-wrapper">
+                <button id="backBtn" class="back-btn"><i class="fas fa-arrow-left"></i> <span id="backText">Back to Categories</span></button>
+                <div class="category-badge" id="categoryBadge">
+                    <i class="fas fa-tag"></i> <span id="currentCategoryDisplay">Select Category</span>
+                </div>
+            </div>
+            <div class="menu-grid" id="menuGrid"></div>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY SECTION -->
+<section id="gallery" class="section section-medium">
+    <div class="container">
+        <h2 class="section-title" id="galleryTitle">Moments at Roseau</h2>
+        <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+</section>
+
+<!-- ABOUT SECTION - Above Footer -->
+<section id="about-footer" class="section section-light-bg">
+    <div class="container">
+        <h2 class="section-title" id="aboutTitle">About Roseau</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p id="aboutText1">Nestled in a serene landscape, Roseau Hotel & Spa combines timeless elegance with modern comforts. Enjoy beautifully appointed rooms, exceptional service, and a peaceful environment that feels like home away from home. Our fine dining experience brings authentic Ethiopian flavors and international cuisine to your table.</p>
+                <p id="aboutText2">Founded in 2010, Roseau has become a landmark of hospitality. We take pride in offering world-class spa treatments, breathtaking views, and personalized service to every guest.</p>
+                <p id="aboutText3"><i class="fas fa-star" style="color: var(--primary-gold);"></i> Award-winning service | <i class="fas fa-star" style="color: var(--primary-gold);"></i> Eco-friendly | <i class="fas fa-star" style="color: var(--primary-gold);"></i> Cultural heritage</p>
+            </div>
+            <div class="features">
+                <div class="feature-card"><i class="fas fa-wifi"></i><h4 id="feature1Title">Free Wi-Fi</h4><p id="feature1Desc">High-speed internet</p></div>
+                <div class="feature-card"><i class="fas fa-utensils"></i><h4 id="feature2Title">Breakfast Included</h4><p id="feature2Desc">Fresh daily buffet</p></div>
+                <div class="feature-card"><i class="fas fa-spa"></i><h4 id="feature3Title">Spa & Wellness</h4><p id="feature3Desc">Relaxation awaits</p></div>
+                <div class="feature-card"><i class="fas fa-concierge-bell"></i><h4 id="feature4Title">24/7 Service</h4><p id="feature4Desc">Room service & support</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER SECTION - MOBILE FRIENDLY -->
+<footer id="contact" class="footer-roseau" style="scroll-margin-top: 70px;">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3 id="quickLinksTitle">Quick Links</h3>
+            <ul>
+                <li><a data-section="about-footer" id="footerAboutLink">About Us</a></li>
+                <li><a data-section="gallery" id="footerGalleryLink">Our Gallery</a></li>
+                <li><a data-section="menu" id="footerMenuLink">Our Menu</a></li>
+                <li><a data-section="home" id="footerHomeLink">Home</a></li>
+            </ul>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+        <div class="footer-section contact-info">
+            <h3 id="contactTitle">Contact Info</h3>
+            <p><i class="fas fa-map-marker-alt"></i> <span id="address">Gondar, Ethiopia</span></p>
+            <p><i class="fas fa-phone-alt"></i> <a href="tel:+251977782907">+251977782907</a></p>
+            <p><i class="fas fa-envelope"></i> <a href="mailto:support@ethionova.com">support@ethionova.com</a></p>
+        </div>
+        <div class="footer-section">
+            <h3 id="hoursTitle">Opening Hours</h3>
+            <div class="hours-info">
+                <p id="hoursText"><strong>Sunday - Sunday</strong> · 24 / 7</p>
+                <div class="badge-24"><i class="fas fa-clock"></i> <span id="alwaysOpen">Always Open</span></div>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3 id="paymentTitle">Payment Methods</h3>
+            <p id="payment1">📱 Telebirr | CBE Birr</p>
+            <p id="payment2">🏦 Bank of Abyssinia | Awash Bank</p>
+            <p id="payment3">💳 Visa | Mastercard</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p id="copyright">© 2025 Roseau Hotel & Spa | Powered by Ethionova | All rights reserved.</p>
+        <a href="#" style="color:#d4af37; text-decoration: none;"><i class="fas fa-crown"></i> <span id="adminDashboard">Admin Dashboard</span></a>
+    </div>
+</footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAlHN3EWZnMOXfa0RNWN6WpE9nrkivACs0",
+        authDomain: "cafe-menu-5358e.firebaseapp.com",
+        projectId: "cafe-menu-5358e"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let menuItems = [];
+    let currentCategory = null;
+    let currentLang = "en";
+    let fastMode = false;
+
+    const homeMenuDiv = document.getElementById("homeMenu");
+    const categoryPageDiv = document.getElementById("categoryPageMenu");
+    const categoryGridEl = document.getElementById("categoryGrid");
+    const menuGridEl = document.getElementById("menuGrid");
+    const backBtn = document.getElementById("backBtn");
+    const searchInput = document.getElementById("searchInput");
+    const langSelect = document.getElementById("langSelect");
+    const fastToggle = document.getElementById("fastToggle");
+    const currentCategoryDisplay = document.getElementById("currentCategoryDisplay");
+
+    const translations = {
+        en: {
+            homeTitle: "Experience Elegance & Comfort",
+            homeSubtitle: "Luxurious rooms, gourmet dining, and unmatched hospitality in the heart of Ethiopia",
+            exploreMenu: "Explore Menu",
+            contactUs: "Contact Us",
+            menuTitle: "Our Digital Menu",
+            searchPlaceholder: "Search dishes...",
+            fastLabel: "🍃 Fasting menu only",
+            backText: "Back to Categories",
+            galleryTitle: "Moments at Roseau",
+            aboutTitle: "About Roseau",
+            aboutText1: "Nestled in a serene landscape, Roseau Hotel & Spa combines timeless elegance with modern comforts. Enjoy beautifully appointed rooms, exceptional service, and a peaceful environment that feels like home away from home.",
+            aboutText2: "Founded in 2010, Roseau has become a landmark of hospitality. We take pride in offering world-class spa treatments, breathtaking views, and personalized service.",
+            aboutText3: "🏆 Award-winning service | 🌱 Eco-friendly | 🎭 Cultural heritage",
+            feature1Title: "Free Wi-Fi",
+            feature1Desc: "High-speed internet",
+            feature2Title: "Breakfast Included",
+            feature2Desc: "Fresh daily buffet",
+            feature3Title: "Spa & Wellness",
+            feature3Desc: "Relaxation awaits",
+            feature4Title: "24/7 Service",
+            feature4Desc: "Room service & support",
+            quickLinksTitle: "Quick Links",
+            contactTitle: "Contact Info",
+            hoursTitle: "Opening Hours",
+            hoursText: "Sunday - Sunday · 24 / 7",
+            alwaysOpen: "Always Open",
+            paymentTitle: "Payment Methods"
+        },
+        am: {
+            homeTitle: "ውበት እና ምቾት ተሞክሩ",
+            homeSubtitle: "የቅንጦት ክፍሎች፣ ጥሩ ምግብ እና እንግዳ ተቀባይነት",
+            exploreMenu: "ምናሌ ያስሱ",
+            contactUs: "ያግኙን",
+            menuTitle: "ዲጂታል ",
+            searchPlaceholder: "ምግቦችን ፈልግ...",
+            fastLabel: "🍃 የጾም ምግብ",
+            backText: "ወደ ምድቦች ተመለስ",
+            galleryTitle: "በሮዞ የሚገኙ አስደሳች ጊዜያት",
+            aboutTitle: "ስለ ሮዞ",
+            aboutText1: "ሮዞ ሆቴል እና ስፓ ዘመናዊ ምቾትን ከጥንታዊ ውበት ጋር ያጣመረ ነው።",
+            aboutText2: "እ.ኤ.አ. በ2010 የተመሰረተው ሮዞ የእንግዳ መቀበያ ምልክት ሆኗል።",
+            aboutText3: "🏆 ሽልማት አሸናፊ | 🌱 ለአካባቢ ተስማሚ | 🎭 ባህላዊ ቅርስ",
+            feature1Title: "ነጻ ዋይ-ፋይ",
+            feature1Desc: "ከፍተኛ ፍጥነት",
+            feature2Title: "ቁርስ ተካቷል",
+            feature2Desc: "ዕለታዊ ቡፌ",
+            feature3Title: "ስፓ እና ደህንነት",
+            feature3Desc: "እረፍት ይጠብቅዎታል",
+            feature4Title: "24/7 አገልግሎት",
+            feature4Desc: "ክፍል አገልግሎት",
+            quickLinksTitle: "ፈጣን አገናኞች",
+            contactTitle: "የእውቂያ መረጃ",
+            hoursTitle: "የስራ ሰዓት",
+            hoursText: "እሁድ - እሁድ · 24 / 7",
+            alwaysOpen: "ሁልጊዜ ክፍት",
+            paymentTitle: "የክፍያ መንገዶች"
+        }
+    };
+
+    function updateLanguage(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        document.getElementById("homeTitle").textContent = t.homeTitle;
+        document.getElementById("homeSubtitle").textContent = t.homeSubtitle;
+        document.getElementById("exploreMenuBtn").innerHTML = `<i class="fas fa-utensils"></i> ${t.exploreMenu}`;
+        document.getElementById("contactUsBtn").innerHTML = `<i class="fas fa-calendar-check"></i> ${t.contactUs}`;
+        document.getElementById("menuTitle").textContent = t.menuTitle;
+        document.querySelector("#searchInput").placeholder = t.searchPlaceholder;
+        document.getElementById("fastLabel").textContent = t.fastLabel;
+        document.getElementById("backText").textContent = t.backText;
+        document.getElementById("galleryTitle").textContent = t.galleryTitle;
+        document.getElementById("aboutTitle").textContent = t.aboutTitle;
+        document.getElementById("aboutText1").textContent = t.aboutText1;
+        document.getElementById("aboutText2").textContent = t.aboutText2;
+        document.getElementById("aboutText3").innerHTML = t.aboutText3;
+        document.getElementById("feature1Title").textContent = t.feature1Title;
+        document.getElementById("feature1Desc").textContent = t.feature1Desc;
+        document.getElementById("feature2Title").textContent = t.feature2Title;
+        document.getElementById("feature2Desc").textContent = t.feature2Desc;
+        document.getElementById("feature3Title").textContent = t.feature3Title;
+        document.getElementById("feature3Desc").textContent = t.feature3Desc;
+        document.getElementById("feature4Title").textContent = t.feature4Title;
+        document.getElementById("feature4Desc").textContent = t.feature4Desc;
+        document.getElementById("quickLinksTitle").textContent = t.quickLinksTitle;
+        document.getElementById("contactTitle").textContent = t.contactTitle;
+        document.getElementById("hoursTitle").textContent = t.hoursTitle;
+        document.getElementById("hoursText").innerHTML = t.hoursText;
+        document.getElementById("alwaysOpen").textContent = t.alwaysOpen;
+        document.getElementById("paymentTitle").textContent = t.paymentTitle;
+        if (currentCategory) renderMenuItems();
+        renderGallery();
+    }
+
+    const galleryImages = [
+        { img: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&auto=format", title: "Luxury Suite", titleAm: "የቅንጦት ስብስብ" },
+        { img: "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&auto=format", title: "Fine Dining", titleAm: "ጥሩ ምግብ" },
+        { img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&auto=format", title: "Spa & Relax", titleAm: "ስፓ እና ዘና" },
+        { img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&auto=format", title: "Infinity Pool", titleAm: "ኢንፊኒቲ ገንዳ" }
+    ];
+    
+    function renderGallery() {
+        const galleryGrid = document.getElementById("galleryGrid");
+        if(galleryGrid) {
+            galleryGrid.innerHTML = galleryImages.map(img => `
+                <div class="gallery-card">
+                    <div class="gallery-img" style="background-image: url('${img.img}');"></div>
+                    <div class="caption">${currentLang === 'am' ? img.titleAm : img.title}</div>
+                </div>
+            `).join('');
+        }
+    }
+
+    onSnapshot(collection(db, "menu"), (snapshot) => {
+        menuItems = [];
+        snapshot.forEach(doc => {
+            const d = doc.data();
+            if (d.active === false) return;
+            menuItems.push({
+                category: d.category?.toLowerCase() || "other",
+                name: d.name,
+                desc: d.desc,
+                price: d.price,
+                img: d.img || "default.jpg",
+                amName: d.amName || d.name,
+                amDesc: d.amDesc || d.desc,
+                fastAllowed: !!d.fastAllowed
+            });
+        });
+        renderHomeMenu();
+    });
+
+    function renderHomeMenu() {
+        if(!categoryGridEl) return;
+        const categories = [...new Set(menuItems.map(i => i.category))];
+        categoryGridEl.innerHTML = "";
+        categories.forEach(cat => {
+            const firstItem = menuItems.find(i => i.category === cat);
+            const imgUrl = firstItem?.img && firstItem.img !== 'default.jpg' ? `images/${firstItem.img}` : 'https://placehold.co/400x240/2c423d/d4af37?text=Roseau';
+            const card = document.createElement("div");
+            card.className = "category-card";
+            card.innerHTML = `<img src="${imgUrl}" onerror="this.src='https://placehold.co/400x240/2c423d/d4af37?text=Menu'"><span>${cat.toUpperCase()}</span>`;
+            card.onclick = () => openCategory(cat);
+            categoryGridEl.appendChild(card);
+        });
+    }
+
+    function openCategory(cat) {
+        currentCategory = cat;
+        homeMenuDiv.classList.remove("active");
+        categoryPageDiv.classList.add("active");
+        backBtn.style.display = "flex";
+        const displayName = cat.toUpperCase();
+        currentCategoryDisplay.textContent = displayName;
+        renderMenuItems();
+    }
+
+    backBtn.onclick = () => {
+        categoryPageDiv.classList.remove("active");
+        homeMenuDiv.classList.add("active");
+        backBtn.style.display = "none";
+        searchInput.value = "";
+        currentCategory = null;
+        currentCategoryDisplay.textContent = "Select Category";
+    };
+
+    function renderMenuItems() {
+        if(!menuGridEl) return;
+        menuGridEl.innerHTML = "";
+        const term = searchInput.value.toLowerCase();
+        const filteredItems = menuItems.filter(item => {
+            if (item.category !== currentCategory) return false;
+            if (fastMode && !item.fastAllowed) return false;
+            const title = currentLang === "am" ? item.amName : item.name;
+            if (term && !title.toLowerCase().includes(term)) return false;
+            return true;
+        });
+        
+        filteredItems.forEach(item => {
+            const title = currentLang === "am" ? item.amName : item.name;
+            const desc = currentLang === "am" ? item.amDesc : item.desc;
+            const imgSrc = (item.img && item.img !== "default.jpg") ? `images/${item.img}` : 'https://placehold.co/400x300/2c423d/d4af37?text=Roseau';
+            const card = document.createElement("div");
+            card.className = "menu-card";
+            card.innerHTML = `
+                <img src="${imgSrc}" onerror="this.src='https://placehold.co/400x300/2c423d/d4af37?text=Dish'">
+                <div class="card-content">
+                    <h3>${escapeHtml(title)}</h3>
+                    <p>${escapeHtml(desc || "Delicious taste")}</p>
+                    <div class="price">${item.price} Birr</div>
+                </div>
+            `;
+            menuGridEl.appendChild(card);
+        });
+        if (filteredItems.length === 0) menuGridEl.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:2rem;">✨ No dishes match ✨</div>';
+    }
+
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+    if(searchInput) searchInput.addEventListener("input", () => { if (currentCategory) renderMenuItems(); });
+    if(fastToggle) fastToggle.addEventListener("change", (e) => { fastMode = e.target.checked; if (currentCategory) renderMenuItems(); });
+    if(langSelect) langSelect.addEventListener("change", (e) => { updateLanguage(e.target.value); if (currentCategory) renderMenuItems(); });
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const lang = btn.getAttribute('data-lang');
+            updateLanguage(lang);
+            if (langSelect) langSelect.value = lang;
+            if (currentCategory) renderMenuItems();
+        });
+    });
+
+    const sections = ['home', 'menu', 'gallery', 'about-footer', 'contact'];
+    const navLinks = document.querySelectorAll('[data-section]');
+    
+    function setActiveNav(sectionId) {
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if(link.getAttribute('data-section') === sectionId) link.classList.add('active');
+        });
+    }
+
+    function scrollToSection(sectionId) {
+        const element = document.getElementById(sectionId);
+        if(element) {
+            const offset = 80;
+            const offsetPosition = element.offsetTop - offset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            setActiveNav(sectionId);
+            document.querySelector('.nav-links')?.classList.remove('active');
+        }
+    }
+
+    document.querySelectorAll('[data-section]').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            const section = el.getAttribute('data-section');
+            if(section) scrollToSection(section);
+        });
+    });
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const scrollPos = window.scrollY + 100;
+        for(let s of sections) {
+            const sec = document.getElementById(s);
+            if(sec && scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight) current = s;
+        }
+        if(current) setActiveNav(current);
+        const nav = document.querySelector('nav');
+        if(window.scrollY > 50) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+    });
+
+    document.querySelector('.hamburger')?.addEventListener('click', () => {
+        document.querySelector('.nav-links')?.classList.toggle('active');
+    });
+
+    setTimeout(() => {
+        homeMenuDiv.classList.add("active");
+        categoryPageDiv.classList.remove("active");
+        backBtn.style.display = "none";
+        renderGallery();
+        updateLanguage('en');
+    }, 100);
+</script>
+</body>
+</html>
