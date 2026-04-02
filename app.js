@@ -55,35 +55,7 @@
             alwaysOpen: "Always Open",
             paymentTitle: "Payment Methods"
         },
-        am: {
-            homeTitle: "ውበት እና ምቾት ተሞክሩ",
-            homeSubtitle: "የቅንጦት ክፍሎች፣ ጥሩ ምግብ እና እንግዳ ተቀባይነት",
-            exploreMenu: "ምናሌ ያስሱ",
-            contactUs: "ያግኙን",
-            menuTitle: "ዲጂታል ",
-            searchPlaceholder: "ምግቦችን ፈልግ...",
-            fastLabel: "🍃 የጾም ምግብ",
-            backText: "ወደ ምድቦች ተመለስ",
-            galleryTitle: "በሮዞ የሚገኙ አስደሳች ጊዜያት",
-            aboutTitle: "ስለ ሮዞ",
-            aboutText1: "ሮዞ ሆቴል እና ስፓ ዘመናዊ ምቾትን ከጥንታዊ ውበት ጋር ያጣመረ ነው።",
-            aboutText2: "እ.ኤ.አ. በ2010 የተመሰረተው ሮዞ የእንግዳ መቀበያ ምልክት ሆኗል።",
-            aboutText3: "🏆 ሽልማት አሸናፊ | 🌱 ለአካባቢ ተስማሚ | 🎭 ባህላዊ ቅርስ",
-            feature1Title: "ነጻ ዋይ-ፋይ",
-            feature1Desc: "ከፍተኛ ፍጥነት",
-            feature2Title: "ቁርስ ተካቷል",
-            feature2Desc: "ዕለታዊ ቡፌ",
-            feature3Title: "ስፓ እና ደህንነት",
-            feature3Desc: "እረፍት ይጠብቅዎታል",
-            feature4Title: "24/7 አገልግሎት",
-            feature4Desc: "ክፍል አገልግሎት",
-            quickLinksTitle: "ፈጣን አገናኞች",
-            contactTitle: "የእውቂያ መረጃ",
-            hoursTitle: "የስራ ሰዓት",
-            hoursText: "እሁድ - እሁድ · 24 / 7",
-            alwaysOpen: "ሁልጊዜ ክፍት",
-            paymentTitle: "የክፍያ መንገዶች"
-        }
+       
     };
 
     function updateLanguage(lang) {
